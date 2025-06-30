@@ -1,0 +1,33 @@
+{
+  "name": "@sds9-org/mono",
+  "version": "1.0.0",
+  "description": "SDS9 Organization monorepo with CDK and Terraform modules",
+  "private": true,
+  "workspaces": [
+    "cdk",
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "npm run build --workspaces",
+    "test": "npm run test --workspaces",
+    "lint": "npm run lint --workspaces",
+    "clean": "npm run clean --workspaces"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0",
+    "eslint": "^8.0.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0"
+  },
+  "engines": {
+    "node": ">=23.0.0",
+    "npm": ">=9.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sds9-org/mono.git"
+  },
+  "author": "SDS9 Organization",
+  "license": "MIT"
+}
