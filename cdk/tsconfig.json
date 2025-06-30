@@ -22,12 +22,14 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "moduleResolution": "node",
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "skipLibCheck": true
   },
   "exclude": [
     "node_modules",
     "cdk.out",
     "lib",
-    "test"
+    "test",
+    "vitest.config.ts"
   ]
 }

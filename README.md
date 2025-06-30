@@ -91,47 +91,45 @@ Available npm scripts at the root level:
 
 #### CDK Package
 
-The CDK package is published to GitHub Packages:
+The CDK package (`@sds9-org/cdk`) is automatically published to GitHub Packages when code is pushed to the `main` branch.
+
+##### Setup GitHub Packages
+
+1. **Create the GitHub repository**: Ensure `https://github.com/sds9-org/mono` exists
+2. **Enable GitHub Packages**: Go to repository Settings → Actions → General → Workflow permissions → Enable "Read and write permissions"
+3. **Configure organization**: Ensure the `sds9-org` organization allows package publishing
+
+##### Manual Publishing
+
+If automatic publishing fails, you can publish manually:
 
 ```bash
+# Publish to GitHub Packages (recommended)
 cd cdk
-npm version patch  # or minor/major
+npm login --registry=https://npm.pkg.github.com
 npm publish --registry=https://npm.pkg.github.com
+
+# Or publish to npmjs.org (if you prefer)
+npm login --registry=https://registry.npmjs.org
+npm publish --registry=https://registry.npmjs.org
 ```
 
-Or use the provided release script:
+##### Troubleshooting Publishing
+
+If you see "Permission permission_denied: The requested installation does not exist":
+
+1. **Repository doesn't exist**: Create the repository at `https://github.com/sds9-org/mono`
+2. **Organization permissions**: Ensure `sds9-org` organization exists and allows package publishing
+3. **Package registry**: Enable GitHub Packages in repository settings
+4. **Alternative**: Switch to npmjs.org by updating `publishConfig.registry` in `cdk/package.json`
+
+### Terraform Module Publishing
+
+Terraform modules are published via Git tags. Create a release tag to publish:
 
 ```bash
-./scripts/release.sh
-```
-
-To install the published package:
-
-```bash
-# Configure registry for @sds9-org scope
-npm config set @sds9-org:registry https://npm.pkg.github.com
-
-# Install the package
-npm install @sds9-org/cdk
-```
-
-#### Terraform Modules
-
-Terraform modules are validated and formatted in CI:
-
-```bash
-# Format all Terraform files
-./scripts/terraform-fmt.sh
-
-# Or manually with Terraform
-terraform fmt -recursive terraform/
-```
-
-Terraform modules are published via Git tags:
-
-```bash
-git tag v1.0.0
-git push origin v1.0.0
+git tag -a terraform/example-module/v1.0.0 -m "Release example-module v1.0.0"
+git push origin terraform/example-module/v1.0.0
 ```
 
 ## License

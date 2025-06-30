@@ -58,6 +58,18 @@ npm run build
 npm test
 ```
 
+#### Watch Mode
+
+```bash
+npm run test:watch
+```
+
+#### UI Mode
+
+```bash
+npm run test:ui
+```
+
 ### Deploying
 
 ```bash

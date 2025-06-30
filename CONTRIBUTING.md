@@ -76,9 +76,10 @@ Thank you for your interest in contributing to our infrastructure code!
 ## Testing
 
 ### CDK Testing
+
 - Unit tests are located in `cdk/test/`
 - Run tests with `npm test`
-- Tests use Jest and CDK assertions
+- Tests use Vitest and CDK assertions
 
 ### Terraform Testing
 - Example usage is in `terraform/examples/`

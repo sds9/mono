@@ -23,6 +23,8 @@ coverage/
 node_modules/
 jspm_packages/
 
+*.d.ts
+
 # Optional npm cache directory
 .npm
 
