@@ -117,6 +117,16 @@ npm install @sds9-org/cdk
 
 #### Terraform Modules
 
+Terraform modules are validated and formatted in CI:
+
+```bash
+# Format all Terraform files
+./scripts/terraform-fmt.sh
+
+# Or manually with Terraform
+terraform fmt -recursive terraform/
+```
+
 Terraform modules are published via Git tags:
 
 ```bash

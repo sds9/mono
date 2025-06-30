@@ -7,7 +7,7 @@ locals {
     },
     var.tags
   )
-  
+
   bucket_name = "${var.name_prefix}-${var.environment}-example-bucket"
 }
 
@@ -22,7 +22,7 @@ resource "aws_s3_bucket" "example" {
 resource "aws_s3_bucket_versioning" "example" {
   count  = var.bucket_versioning ? 1 : 0
   bucket = aws_s3_bucket.example.id
-  
+
   versioning_configuration {
     status = "Enabled"
   }

@@ -61,6 +61,11 @@ Thank you for your interest in contributing to our infrastructure code!
    terraform fmt
    ```
 
+   Or use the provided script:
+   ```bash
+   ./scripts/terraform-fmt.sh
+   ```
+
 4. Test with examples:
    ```bash
    cd ../../examples/your-module

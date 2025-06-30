@@ -16,7 +16,11 @@ jobs:
     - uses: actions/setup-node@v4
       with:
         node-version-file: .nvmrc
-    
+
+    - name: debug info
+      run: |
+        echo "Ref: ${{ github.ref }}"
+        echo "Event: ${{ github.event_name }}"
     - run: npm ci
     
     - run: npm run lint
@@ -35,9 +39,11 @@ jobs:
       with:
         terraform_version: 1.5.0
     
-    - run: terraform fmt -check -recursive terraform/
+    - name: Terraform Format Check
+      run: terraform fmt -check -recursive terraform/
     
-    - run: |
+    - name: Terraform Validate
+      run: |
         for module in terraform/modules/*/; do
           echo "Validating $module"
           cd "$module"
@@ -47,7 +53,7 @@ jobs:
         done
   
   publish-cdk:
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    if: ${{ github.ref == 'refs/heads/main' && github.event_name == 'push' }}
     needs: [test, terraform-validate]
     runs-on: ubuntu-latest
     permissions:

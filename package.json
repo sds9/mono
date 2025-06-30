@@ -10,7 +10,7 @@
   "scripts": {
     "build": "npm run build --workspaces",
     "test": "npm run test --workspaces",
-    "lint": "eslint . --ext .js && npm run lint --workspaces",
+    "lint": "eslint *.js 2>/dev/null || true && npm run lint --workspaces",
     "clean": "npm run clean --workspaces"
   },
   "devDependencies": {

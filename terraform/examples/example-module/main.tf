@@ -14,17 +14,17 @@ provider "aws" {
 
 module "example" {
   source = "../../modules/example-module"
-  
+
   name_prefix = var.name_prefix
   environment = var.environment
-  
+
   bucket_versioning = true
   bucket_encryption = true
-  
+
   tags = {
-    Team        = "Platform"
-    CostCenter  = "Infrastructure"
-    Example     = "true"
+    Team       = "Platform"
+    CostCenter = "Infrastructure"
+    Example    = "true"
   }
 }
 

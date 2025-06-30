@@ -23,5 +23,6 @@ module.exports = {
     '**/dist/**',
     '**/*.d.ts',
     'cdk/**', // CDK files are linted separately
+    'terraform/**', // Terraform files don't need JS linting
   ],
 };
