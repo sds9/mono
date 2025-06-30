@@ -1,6 +1,14 @@
 # SDS9 Organization Monorepo
 
-This monorepo contains CDK constructs and Terraform modules for SDS9 Organization infrastructure.
+This monorepo contains CDK constructs and Terraform modules### CDK Package
+
+The CDK package (`@sds9/cdk`) is automatically published to GitHub Packages when code is pushed to the `main` branch.
+
+#### Setup GitHub Packages
+
+1. **Create the GitHub repository**: Ensure `https://github.com/sds9/mono` exists
+2. **Enable GitHub Packages**: Go to repository Settings → Actions → General → Workflow permissions → Enable "Read and write permissions"
+3. **Configure organization**: Ensure the `sds9` organization allows package publishing Organization infrastructure.
 
 ## Structure
 
@@ -118,8 +126,8 @@ npm publish --registry=https://registry.npmjs.org
 
 If you see "Permission permission_denied: The requested installation does not exist":
 
-1. **Repository doesn't exist**: Create the repository at `https://github.com/sds9-org/mono`
-2. **Organization permissions**: Ensure `sds9-org` organization exists and allows package publishing
+1. **Repository doesn't exist**: Create the repository at `https://github.com/sds9/mono`
+2. **Organization permissions**: Ensure `sds9` organization exists and allows package publishing
 3. **Package registry**: Enable GitHub Packages in repository settings
 4. **Alternative**: Switch to npmjs.org by updating `publishConfig.registry` in `cdk/package.json`
 

@@ -4,9 +4,9 @@
 
 The package is currently configured to publish to GitHub Packages. This requires:
 
-1. A GitHub repository at `https://github.com/sds9-org/mono`
+1. A GitHub repository at `https://github.com/sds9/mono`
 2. GitHub Packages enabled in the repository
-3. Proper organization permissions for `sds9-org`
+3. Proper organization permissions for `sds9`
 
 ## Alternative: npmjs.org
 
@@ -14,7 +14,7 @@ If you prefer to publish to npmjs.org instead, update the `cdk/package.json`:
 
 ```json
 {
-  "name": "@sds9-org/cdk",
+  "name": "@sds9/cdk",
   "publishConfig": {
     "registry": "https://registry.npmjs.org",
     "access": "public"
