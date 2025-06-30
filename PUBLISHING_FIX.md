@@ -25,6 +25,12 @@ Since we changed the package name, I also had to:
 2. Run `npm install` to regenerate it with the correct package references
 3. This ensures `npm ci` works properly in CI/CD
 
+### Rollup Native Binary Fix
+Fixed an npm bug with optional dependencies that was causing Vitest to fail:
+1. Removed `node_modules` and `package-lock.json` completely
+2. Ran `npm install` to reinstall with proper native binaries
+3. This resolves the "Cannot find module @rollup/rollup-linux-x64-gnu" error
+
 ## 🔧 Next Steps to Enable Publishing
 
 1. **Ensure Repository Exists**
@@ -51,5 +57,8 @@ Since we changed the package name, I also had to:
 - ✅ Build working correctly
 - ✅ Documentation updated
 - ✅ CI/CD pipeline ready
+- ✅ `npm ci` works properly
+- ✅ Rollup native binary issue resolved
+- ✅ Vitest running without errors
 
 The publishing should now work once the GitHub repository permissions are properly configured!
