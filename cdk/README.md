@@ -1,19 +1,19 @@
-# @sds9-org/cdk
+# @sds9/cdk
 
 CDK constructs and stacks for SDS9 Organization infrastructure.
 
 ## Installation
 
-First, configure npm to use GitHub Packages for the @sds9-org scope:
+First, configure npm to use GitHub Packages for the @sds9 scope:
 
 ```bash
-npm config set @sds9-org:registry https://npm.pkg.github.com
+npm config set @sds9:registry https://npm.pkg.github.com
 ```
 
 Then install the package:
 
 ```bash
-npm install @sds9-org/cdk
+npm install @sds9/cdk
 ```
 
 ### Authentication
@@ -21,7 +21,7 @@ npm install @sds9-org/cdk
 To install from GitHub Packages, you'll need to authenticate with a GitHub personal access token:
 
 ```bash
-npm login --scope=@sds9-org --registry=https://npm.pkg.github.com
+npm login --scope=@sds9 --registry=https://npm.pkg.github.com
 ```
 
 Or set your token in `.npmrc`:
@@ -33,7 +33,7 @@ Or set your token in `.npmrc`:
 ## Usage
 
 ```typescript
-import { ExampleStack, ExampleConstruct } from '@sds9-org/cdk';
+import { ExampleStack, ExampleConstruct } from '@sds9/cdk';
 import * as cdk from 'aws-cdk-lib';
 
 const app = new cdk.App();
