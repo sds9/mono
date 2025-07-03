@@ -140,6 +140,32 @@ git tag -a terraform/example-module/v1.0.0 -m "Release example-module v1.0.0"
 git push origin terraform/example-module/v1.0.0
 ```
 
+## Releasing
+
+This project uses [Release Please](https://github.com/googleapis/release-please) for automated versioning and releases.
+
+### Automated Releases
+
+1. **Use Conventional Commits**: Follow the [Conventional Commits](https://www.conventionalcommits.org/) specification
+2. **Merge to main**: Release Please analyzes commits and creates release PRs
+3. **Merge release PR**: Automatically publishes packages and creates Git tags
+
+### Release Types
+
+```bash
+# Examples of conventional commits:
+git commit -m "feat(cdk): add new Lambda construct"     # Minor release
+git commit -m "fix(terraform): correct variable type"   # Patch release  
+git commit -m "feat!: breaking API change"              # Major release
+```
+
+### Published Artifacts
+
+- **CDK Package**: Published to GitHub Packages as `@sds9/cdk`
+- **Terraform Modules**: Tagged with `terraform-<module>-v<version>`
+
+See [RELEASE_PLEASE.md](./RELEASE_PLEASE.md) for detailed documentation.
+
 ## License
 
 MIT

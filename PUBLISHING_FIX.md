@@ -60,5 +60,27 @@ Fixed an npm bug with optional dependencies that was causing Vitest to fail:
 - ✅ `npm ci` works properly
 - ✅ Rollup native binary issue resolved
 - ✅ Vitest running without errors
+- ✅ **Release Please automated versioning configured**
+- ✅ **Conventional Commits workflow ready**
+
+## 🚀 Release Please Setup Added
+
+### New Features
+- **Automated versioning** with Google's Release Please
+- **Conventional Commits** support for semantic versioning
+- **CDK package releases** to GitHub Packages
+- **Terraform module releases** via Git tags
+- **Automated changelogs** for all packages
+
+### How Releases Work
+1. Use conventional commits (e.g., `feat:`, `fix:`, `feat!:`)
+2. Release Please creates release PRs automatically
+3. Merge release PR to publish packages and create tags
+
+### Terraform Module Publishing
+Terraform modules are published as Git tags:
+- Format: `terraform-<module-name>-v<version>`
+- Example: `terraform-example-module-v1.2.3`
+- Use in Terraform: `source = "git::https://github.com/sds9/mono.git//terraform/modules/example-module?ref=terraform-example-module-v1.2.3"`
 
 The publishing should now work once the GitHub repository permissions are properly configured!

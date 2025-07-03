@@ -1,0 +1,27 @@
+{
+  "bootstrap-sha": "HEAD",
+  "packages": {
+    ".": {
+      "package-name": "sds9-mono",
+      "release-type": "node",
+      "component": "root"
+    },
+    "cdk": {
+      "package-name": "@sds9/cdk",
+      "release-type": "node",
+      "component": "cdk"
+    },
+    "terraform/modules/example-module": {
+      "package-name": "terraform-example-module",
+      "release-type": "terraform-module",
+      "component": "terraform-example-module"
+    }
+  },
+  "plugins": [
+    {
+      "type": "node-workspace",
+      "merge": false
+    }
+  ],
+  "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json"
+}

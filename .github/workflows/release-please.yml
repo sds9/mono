@@ -1,0 +1,94 @@
+name: Release Please
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+    outputs:
+      releases_created: ${{ steps.release.outputs.releases_created }}
+      paths_released: ${{ steps.release.outputs.paths_released }}
+    steps:
+      - uses: googleapis/release-please-action@v4
+        id: release
+        with:
+          config-file: .release-please-config.json
+          manifest-file: .release-please-manifest.json
+
+  # Publish CDK package to GitHub Packages when a release is created
+  publish-cdk:
+    runs-on: ubuntu-latest
+    needs: release-please
+    if: ${{ needs.release-please.outputs.releases_created && contains(needs.release-please.outputs.paths_released, 'cdk') }}
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Use Node.js from .nvmrc
+      uses: actions/setup-node@v4
+      with:
+        node-version-file: .nvmrc
+        cache: npm
+        registry-url: https://npm.pkg.github.com
+
+    - run: npm ci
+    
+    - run: npm run build
+
+    - name: Publish CDK package to GitHub Packages
+      run: |
+        cd cdk
+        echo "🚀 Publishing CDK package to GitHub Packages..."
+        npm publish --registry=https://npm.pkg.github.com
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  # Create Git tags for Terraform modules when they are released
+  tag-terraform-modules:
+    runs-on: ubuntu-latest
+    needs: release-please
+    if: ${{ needs.release-please.outputs.releases_created }}
+    
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Create Terraform module tags
+      run: |
+        # Parse the released paths and create tags for Terraform modules
+        PATHS_RELEASED='${{ needs.release-please.outputs.paths_released }}'
+        echo "Paths released: $PATHS_RELEASED"
+        
+        # Check if terraform modules were released
+        if echo "$PATHS_RELEASED" | grep -q "terraform/modules/"; then
+          echo "Terraform modules were released, creating tags..."
+          
+          # Read the manifest to get versions
+          for path in $(echo "$PATHS_RELEASED" | jq -r '.[]' 2>/dev/null || echo "$PATHS_RELEASED"); do
+            if [[ "$path" == terraform/modules/* ]]; then
+              MODULE_NAME=$(basename "$path")
+              VERSION=$(jq -r --arg path "$path" '.[$path]' .release-please-manifest.json)
+              TAG_NAME="terraform-${MODULE_NAME}-v${VERSION}"
+              
+              echo "Creating tag: $TAG_NAME for module: $MODULE_NAME version: $VERSION"
+              git tag -a "$TAG_NAME" -m "Release $MODULE_NAME v$VERSION"
+              git push origin "$TAG_NAME"
+            fi
+          done
+        else
+          echo "No Terraform modules were released"
+        fi
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,4 +1,4 @@
-name: CI/CD
+name: CI
 
 on:
   push:
@@ -17,10 +17,6 @@ jobs:
       with:
         node-version-file: .nvmrc
 
-    - name: debug info
-      run: |
-        echo "Ref: ${{ github.ref }}"
-        echo "Event: ${{ github.event_name }}"
     - run: npm ci
     
     - run: npm run lint
@@ -51,67 +47,3 @@ jobs:
           terraform validate
           cd - > /dev/null
         done
-  
-  publish-cdk:
-    if: ${{ github.ref == 'refs/heads/main' && github.event_name == 'push' }}
-    needs: [test, terraform-validate]
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
-      id-token: write
-    
-    steps:
-    - uses: actions/checkout@v4
-    
-    - name: Use Node.js from .nvmrc
-      uses: actions/setup-node@v4
-      with:
-        node-version-file: .nvmrc
-        cache: npm
-        registry-url: https://npm.pkg.github.com
-
-    - run: npm ci
-    
-    - run: npm run build
-    
-    - name: Publish to GitHub Packages
-      run: |
-        cd cdk
-        echo "Attempting to publish to GitHub Packages..."
-        
-        # Check if this version already exists
-        CURRENT_VERSION=$(node -p "require('./package.json').version")
-        PACKAGE_NAME=$(node -p "require('./package.json').name")
-        
-        echo "Package: $PACKAGE_NAME"
-        echo "Version: $CURRENT_VERSION"
-        
-        # Try to check if version exists (ignore errors)
-        if npm view "$PACKAGE_NAME@$CURRENT_VERSION" --registry=https://npm.pkg.github.com 2>/dev/null; then
-          echo "✅ Version $CURRENT_VERSION already exists, skipping publish"
-          exit 0
-        fi
-        
-        # Attempt to publish
-        echo "🚀 Publishing version $CURRENT_VERSION to GitHub Packages..."
-        if npm publish --registry=https://npm.pkg.github.com; then
-          echo "✅ Successfully published to GitHub Packages"
-        else
-          echo "❌ Failed to publish to GitHub Packages"
-          echo "This might be due to:"
-          echo "  - Repository not existing: https://github.com/${{ github.repository }}"
-          echo "  - Missing organization permissions"
-          echo "  - Package registry not enabled"
-          echo ""
-          echo "To fix this:"
-          echo "  1. Ensure the GitHub repository exists"
-          echo "  2. Enable GitHub Packages in repository settings"
-          echo "  3. Ensure the organization allows package publishing"
-          echo ""
-          echo "For now, you can publish manually:"
-          echo "  cd cdk && npm publish --registry=https://npm.pkg.github.com"
-          exit 1
-        fi
-      env:
-        NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
