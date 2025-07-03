@@ -5,6 +5,7 @@
   "private": true,
   "workspaces": [
     "cdk",
+    "docs",
     "packages/*"
   ],
   "scripts": {

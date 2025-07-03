@@ -1,5 +1,6 @@
 {
   ".": "1.0.0",
   "cdk": "1.0.0",
+  "docs": "1.0.0",
   "terraform/modules/example-module": "1.0.0"
 }

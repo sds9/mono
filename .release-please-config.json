@@ -11,6 +11,11 @@
       "release-type": "node",
       "component": "cdk"
     },
+    "docs": {
+      "package-name": "@sds9/docs",
+      "release-type": "node",
+      "component": "docs"
+    },
     "terraform/modules/example-module": {
       "package-name": "terraform-example-module",
       "release-type": "terraform-module",
