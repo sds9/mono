@@ -1,6 +1,6 @@
 # Class: ExampleStack
 
-Defined in: [stacks/example-stack.ts:64](https://github.com/sds9/mono/blob/7282c0fc14f0f97b32621f92e531340af001a774/cdk/src/stacks/example-stack.ts#L64)
+Defined in: [stacks/example-stack.ts:64](https://github.com/sds9/mono/blob/d2790e349a736f71d1bee6213c644d9029f389aa/cdk/src/stacks/example-stack.ts#L64)
 
 Example CDK stack for SDS9 Organization
 
@@ -59,7 +59,7 @@ const stack = new ExampleStack(app, 'MyExampleStack', {
 
 > **new ExampleStack**(`scope`, `id`, `props`): `ExampleStack`
 
-Defined in: [stacks/example-stack.ts:65](https://github.com/sds9/mono/blob/7282c0fc14f0f97b32621f92e531340af001a774/cdk/src/stacks/example-stack.ts#L65)
+Defined in: [stacks/example-stack.ts:65](https://github.com/sds9/mono/blob/d2790e349a736f71d1bee6213c644d9029f389aa/cdk/src/stacks/example-stack.ts#L65)
 
 #### Parameters
 

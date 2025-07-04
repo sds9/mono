@@ -79,6 +79,14 @@ const config: Config = {
         readme: 'none',
       },
     ],
+    [
+      'docusaurus-lunr-search',
+      {
+        // Options for the search plugin
+        languages: ['en'], // language codes
+        indexBaseUrl: true, // whether to index the base URL
+      },
+    ],
   ],
 
   themes: ['@docusaurus/theme-mermaid'],
