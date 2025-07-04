@@ -1,6 +1,6 @@
 {
   "name": "@sds9/cdk",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "CDK constructs and stacks for SDS9 Organization",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
