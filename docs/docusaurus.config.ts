@@ -67,6 +67,26 @@ const config: Config = {
     ],
   ],
 
+  plugins: [
+    [
+      'docusaurus-plugin-typedoc',
+      {
+        entryPoints: ['../cdk/src/index.ts'],
+        tsconfig: '../cdk/tsconfig.json',
+        out: 'docs/api',
+        skipErrorChecking: true,
+        excludeExternals: true,
+        readme: 'none',
+      },
+    ],
+  ],
+
+  themes: ['@docusaurus/theme-mermaid'],
+  
+  markdown: {
+    mermaid: true,
+  },
+
   themeConfig: {
     // Replace with your project's social card
     image: 'img/docusaurus-social-card.jpg',

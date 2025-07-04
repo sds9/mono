@@ -15,6 +15,48 @@ export interface ExampleConstructProps {
 
 /**
  * Example CDK construct for SDS9 Organization
+ * 
+ * This construct demonstrates how to create reusable AWS infrastructure components
+ * using the AWS CDK with TypeScript.
+ * 
+ * ## Architecture
+ * 
+ * ```mermaid
+ * graph TB
+ *     A[ExampleConstruct] --> B[S3 Bucket]
+ *     A --> C[Common Tags]
+ *     
+ *     B --> D[Auto Delete Objects]
+ *     B --> E[Removal Policy: DESTROY]
+ *     
+ *     C --> F[Project: SDS9]
+ *     C --> G[Environment Tag]
+ * ```
+ * 
+ * ## Resource Flow
+ * 
+ * ```mermaid
+ * sequenceDiagram
+ *     participant Dev as Developer
+ *     participant CDK as CDK App
+ *     participant CF as CloudFormation
+ *     participant S3 as S3 Service
+ *     
+ *     Dev->>CDK: Deploy stack
+ *     CDK->>CF: Generate template
+ *     CF->>S3: Create bucket
+ *     S3-->>CF: Bucket created
+ *     CF-->>CDK: Stack deployed
+ *     CDK-->>Dev: Deployment complete
+ * ```
+ * 
+ * @example
+ * ```typescript
+ * const exampleConstruct = new ExampleConstruct(this, 'MyExample', {
+ *   namePrefix: 'my-app',
+ *   environment: 'production'
+ * });
+ * ```
  */
 export class ExampleConstruct extends Construct {
   constructor(scope: Construct, id: string, props: ExampleConstructProps) {
