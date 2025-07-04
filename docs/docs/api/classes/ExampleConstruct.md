@@ -1,6 +1,6 @@
 # Class: ExampleConstruct
 
-Defined in: [constructs/example-construct.ts:61](https://github.com/sds9/mono/blob/d2790e349a736f71d1bee6213c644d9029f389aa/cdk/src/constructs/example-construct.ts#L61)
+Defined in: [constructs/example-construct.ts:61](https://github.com/sds9/mono/blob/a567279fd47a2a461c81de5d5dfc5aa5b8bf9d87/cdk/src/constructs/example-construct.ts#L61)
 
 Example CDK construct for SDS9 Organization
 
@@ -57,7 +57,7 @@ const exampleConstruct = new ExampleConstruct(this, 'MyExample', {
 
 > **new ExampleConstruct**(`scope`, `id`, `props`): `ExampleConstruct`
 
-Defined in: [constructs/example-construct.ts:62](https://github.com/sds9/mono/blob/d2790e349a736f71d1bee6213c644d9029f389aa/cdk/src/constructs/example-construct.ts#L62)
+Defined in: [constructs/example-construct.ts:62](https://github.com/sds9/mono/blob/a567279fd47a2a461c81de5d5dfc5aa5b8bf9d87/cdk/src/constructs/example-construct.ts#L62)
 
 #### Parameters
 

@@ -1,6 +1,6 @@
 # Interface: ExampleStackProps
 
-Defined in: [stacks/example-stack.ts:5](https://github.com/sds9/mono/blob/d2790e349a736f71d1bee6213c644d9029f389aa/cdk/src/stacks/example-stack.ts#L5)
+Defined in: [stacks/example-stack.ts:5](https://github.com/sds9/mono/blob/a567279fd47a2a461c81de5d5dfc5aa5b8bf9d87/cdk/src/stacks/example-stack.ts#L5)
 
 ## Extends
 
@@ -12,7 +12,7 @@ Defined in: [stacks/example-stack.ts:5](https://github.com/sds9/mono/blob/d2790e
 
 > `readonly` **environment**: `string`
 
-Defined in: [stacks/example-stack.ts:9](https://github.com/sds9/mono/blob/d2790e349a736f71d1bee6213c644d9029f389aa/cdk/src/stacks/example-stack.ts#L9)
+Defined in: [stacks/example-stack.ts:9](https://github.com/sds9/mono/blob/a567279fd47a2a461c81de5d5dfc5aa5b8bf9d87/cdk/src/stacks/example-stack.ts#L9)
 
 The environment name (dev, staging, prod)
 
@@ -22,6 +22,6 @@ The environment name (dev, staging, prod)
 
 > `readonly` **namePrefix**: `string`
 
-Defined in: [stacks/example-stack.ts:14](https://github.com/sds9/mono/blob/d2790e349a736f71d1bee6213c644d9029f389aa/cdk/src/stacks/example-stack.ts#L14)
+Defined in: [stacks/example-stack.ts:14](https://github.com/sds9/mono/blob/a567279fd47a2a461c81de5d5dfc5aa5b8bf9d87/cdk/src/stacks/example-stack.ts#L14)
 
 The name prefix for resources
