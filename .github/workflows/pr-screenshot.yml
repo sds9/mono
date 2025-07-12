@@ -1,0 +1,137 @@
+name: PR Screenshot
+
+on:
+  pull_request:
+    branches: [ main ]
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  screenshot:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version-file: .nvmrc
+        cache: npm
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Build docs
+      run: |
+        cd docs
+        npm run build
+
+    - name: Install Playwright
+      run: |
+        cd docs
+        npx playwright install chromium
+
+    - name: Start docs server and take screenshot
+      run: |
+        cd docs
+        # Start server in background
+        npm run serve -- --port 3000 &
+        SERVER_PID=$!
+        echo "Server PID: $SERVER_PID"
+        
+        # Wait for server to start
+        echo "Waiting for server to start..."
+        for i in {1..30}; do
+          if curl -s http://localhost:3000/mono/ > /dev/null; then
+            echo "Server is ready!"
+            break
+          fi
+          sleep 1
+        done
+        
+        # Take screenshot
+        echo "Taking screenshot..."
+        cd ..
+        SITE_URL="http://localhost:3000/mono/" node scripts/take-screenshot.js
+        
+        # Verify screenshot was created
+        if [ -f "docs-screenshot.png" ]; then
+          echo "Screenshot created successfully"
+          ls -la docs-screenshot.png
+        else
+          echo "Screenshot not found!"
+          exit 1
+        fi
+        
+        # Kill server
+        kill $SERVER_PID || true
+      env:
+        SITE_URL: http://localhost:3000/mono/
+
+    - name: Delete previous screenshot comments
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const { owner, repo, number: issue_number } = context.issue;
+          
+          // Get all comments on the PR
+          const comments = await github.rest.issues.listComments({
+            owner,
+            repo,
+            issue_number,
+          });
+          
+          // Find and delete previous screenshot comments
+          for (const comment of comments.data) {
+            if (comment.body.includes('## 📸 Docusaurus Site Screenshot') && comment.user.login === 'github-actions[bot]') {
+              await github.rest.issues.deleteComment({
+                owner,
+                repo,
+                comment_id: comment.id,
+              });
+              console.log(`Deleted previous screenshot comment: ${comment.id}`);
+            }
+          }
+
+    - name: Upload screenshot and comment on PR
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const fs = require('fs');
+          const path = require('path');
+          
+          const { owner, repo, number: issue_number } = context.issue;
+          
+          // Read the screenshot file
+          const screenshotPath = path.join(process.cwd(), 'docs-screenshot.png');
+          
+          if (!fs.existsSync(screenshotPath)) {
+            throw new Error('Screenshot file not found');
+          }
+          
+          const screenshotBuffer = fs.readFileSync(screenshotPath);
+          const screenshotBase64 = screenshotBuffer.toString('base64');
+          
+          // Create data URL for embedding in comment
+          const dataUrl = `data:image/png;base64,${screenshotBase64}`;
+          
+          // Create comment body
+          const commentBody = '## 📸 Docusaurus Site Screenshot\n\n' +
+            'This is an automated screenshot of the Docusaurus site for this PR:\n\n' +
+            `![Docusaurus Site Screenshot](${dataUrl})\n\n` +
+            '> 🤖 This comment is automatically generated and will be updated when the PR is updated.';
+
+          // Post comment
+          await github.rest.issues.createComment({
+            owner,
+            repo,
+            issue_number,
+            body: commentBody,
+          });
+          
+          console.log('Posted screenshot comment to PR');
