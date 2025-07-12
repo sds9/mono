@@ -42,15 +42,34 @@ jobs:
         # Start server in background
         npm run serve -- --port 3000 &
         SERVER_PID=$!
+        echo "Server PID: $SERVER_PID"
         
         # Wait for server to start
-        sleep 10
+        echo "Waiting for server to start..."
+        for i in {1..30}; do
+          if curl -s http://localhost:3000/mono/ > /dev/null; then
+            echo "Server is ready!"
+            break
+          fi
+          sleep 1
+        done
         
         # Take screenshot
-        SITE_URL="http://localhost:3000/mono/" node ../scripts/take-screenshot.js
+        echo "Taking screenshot..."
+        cd ..
+        SITE_URL="http://localhost:3000/mono/" node scripts/take-screenshot.js
+        
+        # Verify screenshot was created
+        if [ -f "docs-screenshot.png" ]; then
+          echo "Screenshot created successfully"
+          ls -la docs-screenshot.png
+        else
+          echo "Screenshot not found!"
+          exit 1
+        fi
         
         # Kill server
-        kill $SERVER_PID
+        kill $SERVER_PID || true
       env:
         SITE_URL: http://localhost:3000/mono/
 
@@ -102,13 +121,10 @@ jobs:
           const dataUrl = `data:image/png;base64,${screenshotBase64}`;
           
           // Create comment body
-          const commentBody = `## 📸 Docusaurus Site Screenshot
-
-This is an automated screenshot of the Docusaurus site for this PR:
-
-![Docusaurus Site Screenshot](${dataUrl})
-
-> 🤖 This comment is automatically generated and will be updated when the PR is updated.`;
+          const commentBody = '## 📸 Docusaurus Site Screenshot\n\n' +
+            'This is an automated screenshot of the Docusaurus site for this PR:\n\n' +
+            `![Docusaurus Site Screenshot](${dataUrl})\n\n` +
+            '> 🤖 This comment is automatically generated and will be updated when the PR is updated.';
 
           // Post comment
           await github.rest.issues.createComment({
