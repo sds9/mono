@@ -1,6 +1,12 @@
 # SDS9 Organization Monorepo
 
-This monorepo contains CDK constructs and Terraform modules### CDK Package
+This monorepo contains CDK constructs and Terraform modules.
+
+## 📚 Documentation
+
+For comprehensive documentation, visit our [documentation site](https://sds9.github.io/mono/).
+
+## CDK Package
 
 The CDK package (`@sds9/cdk`) is automatically published to GitHub Packages when code is pushed to the `main` branch.
 
